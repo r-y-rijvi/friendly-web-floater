@@ -219,7 +219,7 @@ function Index() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-zinc-950 text-zinc-50 w-full p-4">
       <header className="border-b border-border bg-card">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-5">
           <div>
@@ -314,7 +314,7 @@ function Index() {
           />
           <button
             onClick={() => pdfInputRef.current?.click()}
-            className="mt-3 rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground hover:bg-accent"
+            className="transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] active:scale-95"
           >
             {tr("addPdfs")}
           </button>
