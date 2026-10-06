@@ -102,6 +102,7 @@ function Index() {
   const canGenerate = !!reqFile && blockers.length === 0 && files.length > 0;
 
   async function onRequirementsPicked(fileList: FileList | null) {
+    console.log("onRequirementsPicked", fileList?.length);
     const f = fileList?.[0];
     if (!f) return;
     try {
