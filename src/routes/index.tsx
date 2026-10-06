@@ -91,7 +91,8 @@ function Index() {
     if (!reqFile) return new Map<string, DocStatus>();
     const m = new Map<string, DocStatus>();
     for (const r of requirements) {
-      const f = matches[r.id] ? fileById.get(matches[r.id]) : undefined;
+      const fid = matches[r.id];
+      const f = fid ? fileById.get(fid) : undefined;
       m.set(r.id, computeStatus(r, f, expiries[r.id], reqFile.tender.submission_deadline));
     }
     return m;
@@ -154,9 +155,10 @@ function Index() {
       totalBytes += f.size;
       // count pages; mark damaged/protected files
       try {
-        const doc = await pdfjs.getDocument({ data: bytes.slice(0) }).promise;
+        const task = pdfjs.getDocument({ data: bytes.slice(0) });
+        const doc = await task.promise;
         entry.pages = doc.numPages;
-        await doc.destroy();
+        await task.destroy();
       } catch {
         entry.pages = 0;
         entry.error = tr("badFile");
@@ -196,7 +198,7 @@ function Index() {
     try {
       const entries = requirements
         .filter((r) => matches[r.id])
-        .map((r) => ({ req: r, file: fileById.get(matches[r.id])! }))
+        .map((r) => ({ req: r, file: fileById.get(matches[r.id]!)! }))
         .filter((e) => e.file && !e.file.error);
       const bytes = await buildPackagePdf({
         tender: reqFile.tender,
